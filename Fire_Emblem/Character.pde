@@ -2,6 +2,7 @@ public class character {
   int[] inventory;
   int actualX;
   int actualY;
+  int selected;
   
   int hp;
   int str;
@@ -23,6 +24,7 @@ public class character {
   int resgro;
   
   character() {
+    selected = 0;
   }
   
   void display(int x, int y) {
@@ -31,5 +33,9 @@ public class character {
     
     fill(0);
     rect(actualX, actualY, 20, 40);
+  }
+  
+  void info() {
+    
   }
 }
