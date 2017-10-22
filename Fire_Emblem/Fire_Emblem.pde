@@ -1,3 +1,7 @@
+/*
+* Fire Emblem is copyrighted by Nintendo.
+*/
+
 map map1;
 B_Sword ok;
 character Chrom;
