@@ -4,27 +4,48 @@ public class Cursor {
   int mapX;
   int mapY;
   
-  int phase;
+  int anima;
   int selecting;
   
   Cursor() {
-    phase = 1;
+    mapX = 0;
+    mapY = 0;
+    
+    anima = 1;
     selecting = 0;
   }
   
-  void display(int x, int y) {
-    mapX = x;
-    mapY = y;
-    
+  void display() {
     noFill();
-    strokeWeight(2.5);
+    strokeWeight(5);
     stroke(0, 0, 255);
     
     if (phase == 1) {
-      actualX = x*40 - 5;
-      actualY = y*40 - 5;
+      actualX = mapX*40 - 5;
+      actualY = mapY*40 - 5;
       
       rect(actualX, actualY, 50, 50);
     }
+  }
+  
+  void move(String direction) {
+    if (direction == "up") {
+      if (mapY > 0) {
+        mapY--;
+      }
+    } else if (direction == "right") {
+      if (mapX < map.w) {
+        mapX++;
+      }
+    } else if (direction == "down") {
+      if (mapY < map.h) {
+        mapY++;
+      }
+    } else if (direction == "left") {
+      if (mapX > 0) {
+        mapX--;
+      }
+    }
+    
   }
 }
