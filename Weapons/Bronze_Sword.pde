@@ -4,6 +4,7 @@ public class B_Sword {
   int avoid;
   int crit;
   int rank;
+  int identity;
     
   B_Sword(int amount) {
     mt = 4;
@@ -11,5 +12,6 @@ public class B_Sword {
     avoid = 0;
     crit = 0;
     rank = 0;
+    identity = 1;
   }
 }
