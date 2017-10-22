@@ -1,12 +1,15 @@
 public class map {
-  int width1;
-  int height1;
+  int xPos;
+  int yPos;
   int w;
   int h;
   
-  map(int w1, int h1) {
+  int square;
+  
+  map(int w1, int h1, int squareWidth) {
     w = w1;
     h = h1;
+    square = squareWidth;
   }
   
   void display() {
@@ -16,9 +19,9 @@ public class map {
         strokeWeight(1);
         stroke(0);
         
-        width1 = x*40;
-        height1 = y*40;
-        rect(width1, height1, 40, 40);
+        xPos = x*square;
+        yPos = y*square;
+        rect(xPos, yPos, square, square);
       }
     }
   }
