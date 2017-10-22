@@ -31,6 +31,8 @@ public class character {
     actualX = x*40 + 10;
     actualY = y*40;
     
+    strokeWeight(1);
+    stroke(0);
     fill(0);
     rect(actualX, actualY, 20, 40);
   }
