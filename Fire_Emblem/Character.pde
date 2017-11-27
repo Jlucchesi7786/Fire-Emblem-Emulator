@@ -1,19 +1,8 @@
 public class character {
-  int[] inventory;
-  int actualX;
-  int actualY;
-  int selected;
-  
-  int hp;
-  int str;
-  int mag;
-  int skl;
-  int spd;
-  int lck;
-  int def;
-  int res;
-  
-  int mov;
+  String name;
+  String job;
+  int lvl;
+  String align;
   
   int strgro;
   int maggro;
@@ -22,22 +11,24 @@ public class character {
   int lckgro;
   int defgro;
   int resgro;
+  int hpgro;
+  unit unit1;
   
-  character() {
-    selected = 0;
-  }
-  
-  void display(int x, int y) {
-    actualX = x*40 + 10;
-    actualY = y*40;
+  character(String aName, int level, String aJob, String firstItem, String neutral, int place) {
+    name = aName;
+    job = aJob;
+    lvl = level;
+    align = neutral;
     
-    strokeWeight(1);
-    stroke(0);
-    fill(0);
-    rect(actualX, actualY, 20, 40);
-  }
-  
-  void info() {
+    strgro = round(random(100));
+    maggro = round(random(100));
+    sklgro = round(random(100));
+    spdgro = round(random(100));
+    lckgro = round(random(100));
+    defgro = round(random(100));
+    resgro = round(random(100));
+    hpgro = round(random(100));
     
+    unit1 = new unit(name, job, lvl, firstItem, strgro, maggro, sklgro, spdgro, lckgro, defgro, resgro, hpgro, align, place);
   }
 }
