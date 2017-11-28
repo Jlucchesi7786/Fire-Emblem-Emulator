@@ -82,6 +82,7 @@
   // trying to create a way for the objects to work together
     // trying to make unit object work inside character object
   public mercenary unit1;
+  public hero unit2;
   public berserker unit3;
   
   
@@ -119,6 +120,62 @@
       lvl = level;
       exp = 0;
       mov = unit1.mov;
+      moving = -1;
+    } else if (ajob == classes[1]) {
+      unit2 = new hero();
+      name = aName;
+      job = unit2.job;
+      place = place1;
+      
+      growths[0] = strgrofinal = unit2.strgro + growth1;
+      growths[1] = maggrofinal = unit2.maggro + growth2;
+      growths[2] = sklgrofinal = unit2.sklgro + growth3;
+      growths[3] = spdgrofinal = unit2.spdgro + growth4;
+      growths[4] = lckgrofinal = unit2.lckgro + growth5;
+      growths[5] = defgrofinal = unit2.defgro + growth6;
+      growths[6] = resgrofinal = unit2.resgro + growth7;
+      growths[7] = hpgrofinal = unit2.hpgro + growth8;
+      
+      stats[0] = str = unit2.str;
+      stats[1] = mag = unit2.mag;
+      stats[2] = skl = unit2.skl;
+      stats[3] = spd = unit2.spd;
+      stats[4] = lck = unit2.lck;
+      stats[5] = def = unit2.def;
+      stats[6] = res = unit2.res;
+      stats[7] = max = unit2.max;
+      
+      lvl = level;
+      exp = 0;
+      mov = unit2.mov;
+      moving = -1;
+    } else if (ajob == classes[2]) {
+      unit3 = new berserker();
+      name = aName;
+      job = unit3.job;
+      place = place1;
+      
+      growths[0] = strgrofinal = unit3.strgro + growth1;
+      growths[1] = maggrofinal = unit3.maggro + growth2;
+      growths[2] = sklgrofinal = unit3.sklgro + growth3;
+      growths[3] = spdgrofinal = unit3.spdgro + growth4;
+      growths[4] = lckgrofinal = unit3.lckgro + growth5;
+      growths[5] = defgrofinal = unit3.defgro + growth6;
+      growths[6] = resgrofinal = unit3.resgro + growth7;
+      growths[7] = hpgrofinal = unit3.hpgro + growth8;
+      
+      stats[0] = str = unit3.str;
+      stats[1] = mag = unit3.mag;
+      stats[2] = skl = unit3.skl;
+      stats[3] = spd = unit3.spd;
+      stats[4] = lck = unit3.lck;
+      stats[5] = def = unit3.def;
+      stats[6] = res = unit3.res;
+      stats[7] = max = unit3.max;
+      
+      lvl = level;
+      exp = 0;
+      mov = unit3.mov;
       moving = -1;
     }
       
@@ -170,6 +227,12 @@
   void display() {
     if (select == -1) {
       selected = 0;
+    }
+    
+    for (int i = 0; i < maps[map1.number-1].length; i++) {
+      if ((maps[map1.number-1][i].mapY == mapY) && (maps[map1.number-1][i].mapX == mapX)) {
+        mapY++;
+      }
     }
     /*for (int i = 0; i < maps[map1.number-1].length; i++) {
       if (mapX+1 != maps[map1.number-1][i].mapX) {
@@ -386,9 +449,11 @@
         
         // if attacking shows the attack rates.
         if (attacking == 1) {
-          textSize(15);
+          textSize(17);
+          fill(0);
           text("Hit: " + combohit + "%", 450, 450);
-          text("Damage: " + damage, 450, 465);
+          text("Damage: " + damage, 450, 469);
+          text(characters[defendingUnit].unit1.hp + " > " + (characters[defendingUnit].unit1.hp - damage), 450, 494);
         }
       }
     }
@@ -465,13 +530,27 @@
     }
   }
   
-  void attack() {
+  void attackSetup() {
     combohit = hit - characters[defendingUnit].unit1.avo;
     damage = atk - characters[defendingUnit].unit1.def;
     if (combohit > 100) {
       combohit = 100; 
     }
     attacking = 1;
+  }
+  
+  void attack() {
+    int hit = round(random(100));
+    if (hit <= combohit) {
+      characters[defendingUnit].unit1.hp -= damage;
+    }
+    attacking = 0;
+    menu.selectedFunction = 0;
+    attackSquare = 0;
+    select = -1;
+    menu.item = 1;
+    combohit = 0;
+    damage = 0;
   }
   
   void equip() {
@@ -484,5 +563,6 @@
       }
     }
   rng = weaponRanges[inventory[0]-1];
+  menu.selectedFunction = 1;
   }
 }
