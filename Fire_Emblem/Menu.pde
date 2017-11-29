@@ -1,5 +1,5 @@
 public class Menu {
-  int on;
+  boolean on = false;
   int selectedUnit;
   int item;
   int itemMax;
@@ -17,7 +17,7 @@ public class Menu {
     strokeWeight(1);
     textSize(15);
     if (selectedUnit != -1) {
-      if (on == 1) {
+      if (on) {
         for (int i = 0; i < itemMax; i++) {
           if (item-1 == i) {
             fill(0, 255, 0);
@@ -32,13 +32,13 @@ public class Menu {
         }
       }
     } else {
-      on = 0;
+      on = false;
     }
   }
   
   void select() {
     selectedFunction = item;
-    on = 0;
+    on = false;
     if (selectedFunction == 2) {
       attackingUnit = selectedUnit;
     }
