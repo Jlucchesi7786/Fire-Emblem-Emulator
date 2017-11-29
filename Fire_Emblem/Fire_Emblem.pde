@@ -1,5 +1,5 @@
 /*
-* Fire Emblem is copyrighted by Nintendo.
+* Fire Emblem is copyrighted and owned by Nintendo.
 */
 
 // Chrom is the test unit
@@ -15,9 +15,10 @@ void setup() {
   int w = 11;
   int h = 18;
   // if the cursor is currently selecting anything
-  int select = -1;
+  boolean select = false;
   // what turn it is
   int turn = 0;
+  // to keep track of how many allies and enemies there are
   int numOEnemies;
   int numOAllies;
   // combined combat stats
@@ -72,7 +73,7 @@ void setup() {
   String[] labels = {"/", "Level ", "exp ", "move ", "Strength  ", "Magic  ", "Skill  ", "Speed  ", "Luck  ", "Defense  ", "Resistance  ", "Atk  ", "Hit  ", "Avo  ", "Crit  "};
 
 // 8 character limit on names
-character[] characters = {new character("test dum", 1, "Merc", "Steel Bow", "Ally", 0), new character("Enemy", 5, "Merc", "Steel Axe", "Enemy", 1), new character("Chrom", 5, "Merc", "Steel Sword", "Ally", 2)};
+character[] characters = {new character("test dum", 1, "Bers", "Steel Bow", "Ally", 0), new character("Chrom", 5, "Merc", "Steel Sword", "Ally", 1), new character("Enemy", 5, "Merc", "Steel Axe", "Enemy", 2)};
 wall[] map1walls = {new wall("Straight", 1, 0, 5), new wall("Straight", 1, 1, 5), new wall("Straight", 1, 2, 5), new wall("Straight", 1, 3, 5), new wall("Straight", 1, 4, 5), new wall("Door", 1, 5, 5), new wall("Straight", 1, 6, 5), new wall("Straight", 1, 7, 5), new wall("Straight", 1, 8, 5), new wall("Straight", 1, 9, 5), new wall("Straight", 1, 10, 5)};
 wall[] map2walls = {new wall("Thick", 1, 5, 5), new wall("Thick Door", 2, 5, 6)};
 Cursor cursor = new Cursor();
@@ -90,12 +91,17 @@ void draw() {
   
   cursor.display();
   menu.display();
+  
+  for (int i = 0; i < characters.length; i++) {
+    println(characters[i].name + "X: " + characters[i].unit1.mapX);
+    println(characters[i].name + "Y: " + characters[i].unit1.mapY);
+  }
 }
 
 
 void keyPressed() {
   if ((key == 'w') || (keyCode == UP)) {
-    if ((menu.on == 0) && (menu.selectedFunction < 2)) {
+    if ((!menu.on) && (menu.selectedFunction < 2)) {
       cursor.move("up");
     } else if (menu.selectedFunction == 2) {
       if (attackSquare > 0) {
@@ -111,11 +117,11 @@ void keyPressed() {
       }
     }
   } else if ((key == 'a') || (keyCode == LEFT)) {
-    if ((menu.on == 0) && (menu.selectedFunction < 2)) {
+    if ((!menu.on) && (menu.selectedFunction < 2)) {
       cursor.move("left");
     }
   } else if ((key == 's') || (keyCode == DOWN)) {
-    if ((menu.on == 0) && (menu.selectedFunction < 2)) {
+    if ((!menu.on) && (menu.selectedFunction < 2)) {
       cursor.move("down");
     } else if (menu.selectedFunction == 2) {
       if (characters[menu.selectedUnit].unit1.rng == 1) {
@@ -137,13 +143,23 @@ void keyPressed() {
       }
     }
   } else if ((key == 'd') || (keyCode == RIGHT)) {
-    if ((menu.on == 0) && (menu.selectedFunction < 2)) {
+    if ((!menu.on) && (menu.selectedFunction < 2)) {
       cursor.move("right");
+    }
+  } else if (key == 'z') {
+    if (menu.on) {
+      menu.on = false;
+      select = false;
+    } else if (menu.selectedFunction > 0) {
+      menu.selectedFunction = 0;
+      select = false;
+      menu.item = 1;
+      attackSquare = 1;
     }
   } else if (key == 'l') {
     characters[0].unit1.exp += 100;
   } else if (key == ' ') {
-    if ((menu.on == 0)) {
+    if ((menu.on == false)) {
       cursor.select();
     } else {
       menu.select();
