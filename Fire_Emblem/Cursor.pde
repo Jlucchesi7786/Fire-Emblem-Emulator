@@ -1,6 +1,5 @@
 public class Cursor {
   int anima;
-  int selecting;
   
   int actualX;
   int actualY;
@@ -14,7 +13,6 @@ public class Cursor {
   
   Cursor() {
     anima = 0;
-    selecting = 0;
     selectX = -1;
     selectY = -1;
     
@@ -23,8 +21,8 @@ public class Cursor {
   }
   
   void display() {
-    if (select == 1) {
-      anima = 0;
+    if (select) {
+      anima = 59;
     }
     
     if (anima < 60) {
@@ -40,11 +38,11 @@ public class Cursor {
     stroke(0, 168, 255);
     strokeWeight(7);
     if (anima <= 20) {
-        rect(actualX-4, actualY-4, scale+8, scale+8);
+        rect(actualX-8, actualY-8, scale+16, scale+16);
     } else if (anima <= 40) {
         rect(actualX-6, actualY-6, scale+12, scale+12);
     } else if (anima <= 60) {
-        rect(actualX-8, actualY-8, scale+16, scale+16);
+        rect(actualX-4, actualY-4, scale+8, scale+8);
     }
     if (menu.selectedFunction == 2) {
       for (int i = 0; i < characters[selectedUnit].unit1.attackSquaresX.length; i++) {
@@ -61,15 +59,15 @@ public class Cursor {
   }
   
   void select() {
-    if (select == -1) {
+    if (!select) {
       origX = mapX;
       origY = mapY;
       for (int i = 0; i < characters.length; i++) {
         if ((characters[i].unit1.mapX == mapX) && (characters[i].unit1.mapY == mapY)) {
           if (characters[i].align == "Ally") {
             selectedUnit = i;
-            select = 1;
-            menu.on = 1;
+            select = true;
+            menu.on = true;
             menu.selectedUnit = i;
             for (int z = 0; z < characters.length; z++) {
               characters[z].unit1.moving = i;
@@ -109,11 +107,14 @@ public class Cursor {
           }
         }
       }
-      select = -1;
+      select = false;
+      menu.selectedFunction = 0;
       for (int i = 0; i < characters.length; i++) {
         characters[i].unit1.moving = -1;
       }
       selectedUnit = -1;
+    } else if ((menu.selectedFunction == 2) && (characters[attackingUnit].unit1.attacking)) {
+      characters[attackingUnit].unit1.attack();
     } else if (menu.selectedFunction == 2) {
       for (int i = 0; i < characters.length; i++) {
         if ((characters[i].unit1.mapX == selectX) && (characters[i].unit1.mapY == selectY) && (characters[i].align == "Enemy")) {
@@ -122,32 +123,35 @@ public class Cursor {
       }
       if (defendingUnit > -1) {
         attackingUnit = selectedUnit;
-        characters[attackingUnit].unit1.attack();
-        
+        characters[attackingUnit].unit1.attackSetup();
       }
+      
       for (int i = 0; i < characters.length; i++) {
         characters[i].unit1.moving = -1;
       }
     } else if (menu.selectedFunction == 3) {
       characters[selectedUnit].unit1.equip();
-      select = -1;
+      select = false;
       menu.item = 1;
+      menu.selectedFunction = 0;
+      selectedUnit = -1;
+      defendingUnit = -1;
+      attackingUnit = -1;
       for (int i = 0; i < characters.length; i++) {
         characters[i].unit1.moving = -1;
       }
     } else {
-      select = -1;
+      select = false;
       selectedUnit = -1;
       defendingUnit = -1;
       attackingUnit = -1;
+      menu.selectedFunction = 0;
       menu.item = 1;
       for (int i = 0; i < characters.length; i++) {
         characters[i].unit1.moving = -1;
       }
     }
     menu.selectedUnit = selectedUnit;
-    menu.selectedFunction = 0;
-    attackSquare = 0;
   }
   
   void move(String direction) {
