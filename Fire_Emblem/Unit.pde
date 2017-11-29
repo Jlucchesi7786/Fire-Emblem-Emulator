@@ -12,7 +12,7 @@
   int mov;
   
   // selected tells the unit if it is currently being selected
-  int selected;
+  boolean selected;
   String name;
   
   // alignment tells it if it's part of the player's team or not.
@@ -29,6 +29,7 @@
   // tells which unit is currently being moved. if no unit is being moved, should be -1 so as not to reference any unit in the characters[] array
   int moving;
   
+  // rng keeps track of the attack range of the current weapon
   int rng;
   // the main 7 stats, along with the HP stat and an array to contain them all
   int str;
@@ -63,7 +64,10 @@
   int crit;
   int critevade;
   int[] mainStats = {atk, avo, hit, crit};
-  int attacking;
+  
+  // attacking keeps track of if the unit is attacking
+  boolean attacking = false;
+  boolean dead = false;
   
   // place is the units place in the characters[] array
   int place;
@@ -71,7 +75,7 @@
   // mapX and mapY keep track of where the unit is on the map
   int mapX;
   int mapY;
-  int[] inventory = {0, 1, 7, 10, 15};
+  int[] inventory = {0, 1, 7, 17, 15};
   int[] attackSquaresX = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   int[] attackSquaresY = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   int[][] attackPlaces = {attackSquaresX, attackSquaresY};
@@ -117,10 +121,7 @@
       stats[6] = res = unit1.res;
       stats[7] = max = unit1.max;
       
-      lvl = level;
-      exp = 0;
       mov = unit1.mov;
-      moving = -1;
     } else if (ajob == classes[1]) {
       unit2 = new hero();
       name = aName;
@@ -145,10 +146,7 @@
       stats[6] = res = unit2.res;
       stats[7] = max = unit2.max;
       
-      lvl = level;
-      exp = 0;
       mov = unit2.mov;
-      moving = -1;
     } else if (ajob == classes[2]) {
       unit3 = new berserker();
       name = aName;
@@ -173,15 +171,8 @@
       stats[6] = res = unit3.res;
       stats[7] = max = unit3.max;
       
-      lvl = level;
-      exp = 0;
       mov = unit3.mov;
-      moving = -1;
     }
-      
-    mapX = round(random(w));
-    mapY = round(random(h));
-    
     
     for (int i = 0; i < weapons.length; i++) {
       if (item1 == weapons[i]) {
@@ -218,76 +209,92 @@
       def = stats[5];
       res = stats[6];
     }
-    hp = max;
     unit++;
+    mapX = round(random(w));
+    mapY = round(random(h));
+    moving = -1;
+    lvl = level;
+    hp = max;
+    exp = 0;
+    selected = false;
   }
-  
   
   // shows the unit on the map. Could use more detailed sprites or something
   void display() {
-    if (select == -1) {
-      selected = 0;
+    if (!select) {
+      selected = false;
     }
     
-    for (int i = 0; i < maps[map1.number-1].length; i++) {
-      if ((maps[map1.number-1][i].mapY == mapY) && (maps[map1.number-1][i].mapX == mapX)) {
-        mapY++;
-      }
+    if (hp <= 0) {
+      dead = true;
+    } else {
+      dead = false;
     }
-    /*for (int i = 0; i < maps[map1.number-1].length; i++) {
-      if (mapX+1 != maps[map1.number-1][i].mapX) {
-        println(i);
-      }
-      /*if ((mapX == maps[map1.number-1][i].mapX) && (mapY == maps[map1.number-1][i].mapY)) {
-        
-        if (mapX == w) {
-          mapX--;
-        } else {
-          mapX++;
-        }
-        if (mapY == h) {
-          mapX--;
-        } else {
-          mapX++;
-        }
-      }
-    }*/
-    levelup();
-    hover();
-    selected();
     
-    if (mapX < map1.w) {
-      if (mapX > -1) {
-        if (mapY < map1.h) {
-          if (mapY > -1) {
-            if (alignment == "Enemy") {
-              fill(155, 0, 0);
-            } else {
-              fill(0, 0, 155);
-            }
-            stroke(0);
-            strokeWeight(0);
-            rect(mapX*scale+1, mapY*scale+1, scale-1, scale-1);
+    if (!dead) {
+      for (int i = 0; i < maps[map1.number-1].length; i++) {
+        if ((maps[map1.number-1][i].mapY == mapY) && (maps[map1.number-1][i].mapX == mapX) && (maps[map1.number-1][i].type != "Door")) {
+          mapY++;
+        }
+      }
+      /*for (int i = 0; i < maps[map1.number-1].length; i++) {
+        if (mapX+1 != maps[map1.number-1][i].mapX) {
+          println(i);
+        }
+        /*if ((mapX == maps[map1.number-1][i].mapX) && (mapY == maps[map1.number-1][i].mapY)) {
+          
+          if (mapX == w) {
+            mapX--;
           } else {
-            mapY++;
+            mapX++;
+          }
+          if (mapY == h) {
+            mapX--;
+          } else {
+            mapX++;
+          }
+        }
+      }*/
+      levelup();
+      hover();
+      selected();
+      
+      if (mapX < map1.w) {
+        if (mapX > -1) {
+          if (mapY < map1.h) {
+            if (mapY > -1) {
+              if (alignment == "Enemy") {
+                fill(155, 0, 0);
+              } else {
+                fill(0, 0, 155);
+              }
+              stroke(0);
+              strokeWeight(0);
+              rect(mapX*scale+1, mapY*scale+1, scale-1, scale-1);
+            } else {
+              mapY++;
+            }
+          } else {
+            mapY--;
           }
         } else {
-          mapY--;
+          mapX++;
         }
       } else {
-        mapX++;
+        mapX--;
       }
     } else {
-      mapX--;
+      mapX = -1;
+      mapY = -1;
     }
   }
   
   // when the cursor is hovering over the unit, it needs to show more info
   void hover() {
-    if (((cursor.mapX == mapX) && (cursor.mapY == mapY)) || (selected == 1)) {
+    if (((cursor.mapX == mapX) && (cursor.mapY == mapY)) || (selected)) {
       
-      if (select == 1) {
-        selected = 1;
+      if (select) {
+        selected = true;
       }
       
       // displays attack range
@@ -448,11 +455,12 @@
         }
         
         // if attacking shows the attack rates.
-        if (attacking == 1) {
+        if (attacking) {
           textSize(17);
           fill(0);
           text("Hit: " + combohit + "%", 450, 450);
           text("Damage: " + damage, 450, 469);
+          fill(0, 0, 255);
           text(characters[defendingUnit].unit1.hp + " > " + (characters[defendingUnit].unit1.hp - damage), 450, 494);
         }
       }
@@ -534,9 +542,12 @@
     combohit = hit - characters[defendingUnit].unit1.avo;
     damage = atk - characters[defendingUnit].unit1.def;
     if (combohit > 100) {
-      combohit = 100; 
+      combohit = 100;
     }
-    attacking = 1;
+    if (characters[defendingUnit].unit1.hp - damage <= 0) {
+      damage = characters[defendingUnit].unit1.hp;
+    }
+    attacking = true;
   }
   
   void attack() {
@@ -544,10 +555,10 @@
     if (hit <= combohit) {
       characters[defendingUnit].unit1.hp -= damage;
     }
-    attacking = 0;
+    attacking = false;
     menu.selectedFunction = 0;
     attackSquare = 0;
-    select = -1;
+    select = false;
     menu.item = 1;
     combohit = 0;
     damage = 0;
