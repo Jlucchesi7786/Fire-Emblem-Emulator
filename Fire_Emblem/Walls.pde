@@ -44,9 +44,11 @@ public class wall {
        if (appearance == 1) {
          rect(mapX*scale, mapY*scale + scale/4, scale/4, scale/2);
          rect(mapX*scale + scale/4*3, mapY*scale + scale/4, scale/4, scale/2);
+         type = "Door";
        } else if (appearance == 2) {
          rect(mapX*scale + scale/4, mapY*scale, scale/2, scale/4);
          rect(mapX*scale + scale/4, mapY*scale + scale/4*3, scale/2, scale/4);
+         type = "Door";
        }
      } else if (mainAppearance == "Thick Door") {
        if (appearance == 1) {
