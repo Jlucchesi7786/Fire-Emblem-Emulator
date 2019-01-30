@@ -1,4 +1,4 @@
- public class unit {
+public class unit {
   // job is what class the unit is. references the classes[] array.
   int job;
   
@@ -85,10 +85,7 @@
   
   // trying to create a way for the objects to work together
     // trying to make unit object work inside character object
-  public mercenary unit1;
-  public hero unit2;
-  public berserker unit3;
-  
+  public subclass foo;
   
   unit(String aName, String ajob, int level, String item1, int growth1, int growth2, int growth3, int growth4, int growth5, int growth6, int growth7, int growth8, String align, int place1) {
     alignment = align;
@@ -97,82 +94,30 @@
     } else if (align == "Ally") {
       numOAllies++;
     }
-    if (ajob == classes[0]) {
-      unit1 = new mercenary();
-      name = aName;
-      job = unit1.job;
-      place = place1;
-      
-      growths[0] = strgrofinal = unit1.strgro + growth1;
-      growths[1] = maggrofinal = unit1.maggro + growth2;
-      growths[2] = sklgrofinal = unit1.sklgro + growth3;
-      growths[3] = spdgrofinal = unit1.spdgro + growth4;
-      growths[4] = lckgrofinal = unit1.lckgro + growth5;
-      growths[5] = defgrofinal = unit1.defgro + growth6;
-      growths[6] = resgrofinal = unit1.resgro + growth7;
-      growths[7] = hpgrofinal = unit1.hpgro + growth8;
-      
-      stats[0] = str = unit1.str;
-      stats[1] = mag = unit1.mag;
-      stats[2] = skl = unit1.skl;
-      stats[3] = spd = unit1.spd;
-      stats[4] = lck = unit1.lck;
-      stats[5] = def = unit1.def;
-      stats[6] = res = unit1.res;
-      stats[7] = max = unit1.max;
-      
-      mov = unit1.mov;
-    } else if (ajob == classes[1]) {
-      unit2 = new hero();
-      name = aName;
-      job = unit2.job;
-      place = place1;
-      
-      growths[0] = strgrofinal = unit2.strgro + growth1;
-      growths[1] = maggrofinal = unit2.maggro + growth2;
-      growths[2] = sklgrofinal = unit2.sklgro + growth3;
-      growths[3] = spdgrofinal = unit2.spdgro + growth4;
-      growths[4] = lckgrofinal = unit2.lckgro + growth5;
-      growths[5] = defgrofinal = unit2.defgro + growth6;
-      growths[6] = resgrofinal = unit2.resgro + growth7;
-      growths[7] = hpgrofinal = unit2.hpgro + growth8;
-      
-      stats[0] = str = unit2.str;
-      stats[1] = mag = unit2.mag;
-      stats[2] = skl = unit2.skl;
-      stats[3] = spd = unit2.spd;
-      stats[4] = lck = unit2.lck;
-      stats[5] = def = unit2.def;
-      stats[6] = res = unit2.res;
-      stats[7] = max = unit2.max;
-      
-      mov = unit2.mov;
-    } else if (ajob == classes[2]) {
-      unit3 = new berserker();
-      name = aName;
-      job = unit3.job;
-      place = place1;
-      
-      growths[0] = strgrofinal = unit3.strgro + growth1;
-      growths[1] = maggrofinal = unit3.maggro + growth2;
-      growths[2] = sklgrofinal = unit3.sklgro + growth3;
-      growths[3] = spdgrofinal = unit3.spdgro + growth4;
-      growths[4] = lckgrofinal = unit3.lckgro + growth5;
-      growths[5] = defgrofinal = unit3.defgro + growth6;
-      growths[6] = resgrofinal = unit3.resgro + growth7;
-      growths[7] = hpgrofinal = unit3.hpgro + growth8;
-      
-      stats[0] = str = unit3.str;
-      stats[1] = mag = unit3.mag;
-      stats[2] = skl = unit3.skl;
-      stats[3] = spd = unit3.spd;
-      stats[4] = lck = unit3.lck;
-      stats[5] = def = unit3.def;
-      stats[6] = res = unit3.res;
-      stats[7] = max = unit3.max;
-      
-      mov = unit3.mov;
-    }
+    foo = new subclass(ajob);
+    name = aName;
+    job = foo.job;
+    place = place1;
+    
+    growths[0] = strgrofinal = foo.strgro + growth1;
+    growths[1] = maggrofinal = foo.maggro + growth2;
+    growths[2] = sklgrofinal = foo.sklgro + growth3;
+    growths[3] = spdgrofinal = foo.spdgro + growth4;
+    growths[4] = lckgrofinal = foo.lckgro + growth5;
+    growths[5] = defgrofinal = foo.defgro + growth6;
+    growths[6] = resgrofinal = foo.resgro + growth7;
+    growths[7] = hpgrofinal = foo.hpgro + growth8;
+    
+    stats[0] = str = foo.str;
+    stats[1] = mag = foo.mag;
+    stats[2] = skl = foo.skl;
+    stats[3] = spd = foo.spd;
+    stats[4] = lck = foo.lck;
+    stats[5] = def = foo.def;
+    stats[6] = res = foo.res;
+    stats[7] = max = foo.max;
+    
+    mov = foo.mov;
     
     for (int i = 0; i < weapons.length; i++) {
       if (item1 == weapons[i]) {
@@ -457,11 +402,14 @@
         // if attacking shows the attack rates.
         if (attacking) {
           textSize(17);
-          fill(0);
-          text("Hit: " + combohit + "%", 450, 450);
-          text("Damage: " + damage, 450, 469);
           fill(0, 0, 255);
-          text(characters[defendingUnit].unit1.hp + " > " + (characters[defendingUnit].unit1.hp - damage), 450, 494);
+          text("Hit: " + attackcombohit + "%", 450, 450);
+          text("Damage: " + attackdamage, 450, 469);
+          text(characters[defendingUnit].unit1.hp + " > " + (characters[defendingUnit].unit1.hp - attackdamage), 450, 494);
+          fill(255, 0, 0);
+          text("Hit: " + defendcombohit + "%", 600, 450);
+          text("Damage: " + defenddamage, 600, 469);
+          text(characters[attackingUnit].unit1.hp + " > " + (characters[attackingUnit].unit1.hp - defenddamage), 600, 494);
         }
       }
     }
@@ -489,9 +437,10 @@
           res = stats[6];
           hp = stats[7];
         }
-      } else {
-        exp = 0;
       }
+    }
+    if (lvl == 20) {
+      exp = 0;
     }
   }
   
@@ -502,7 +451,7 @@
       int origY = cursor.origY;
       int origX = cursor.origX;
       
-      if ((pMovX < origX) && (pMovY < origY)) {
+      /*if ((pMovX < origX) && (pMovY < origY)) {
         if ((origX - pMovX) + (origY - pMovY) <= mov) {
           edgeX = cursor.mapX;
           edgeY = cursor.mapY;
@@ -532,6 +481,10 @@
           edgeX = cursor.mapX;
           edgeY = cursor.mapY;
         }
+      }*/
+      if ((pMovX != origX) || (pMovY != origY)) {
+        edgeX = cursor.mapX;
+        edgeY = cursor.mapY;
       }
       fill(0, 0, 155);
       rect(edgeX*scale, edgeY*scale, scale, scale);
@@ -539,29 +492,50 @@
   }
   
   void attackSetup() {
-    combohit = hit - characters[defendingUnit].unit1.avo;
-    damage = atk - characters[defendingUnit].unit1.def;
-    if (combohit > 100) {
-      combohit = 100;
+    attackcombohit = hit - characters[defendingUnit].unit1.avo;
+    attackdamage = atk - characters[defendingUnit].unit1.def;
+    if (attackcombohit > 100) {
+      attackcombohit = 100;
     }
-    if (characters[defendingUnit].unit1.hp - damage <= 0) {
-      damage = characters[defendingUnit].unit1.hp;
+    if (characters[defendingUnit].unit1.hp - attackdamage <= 0) {
+      attackdamage = characters[defendingUnit].unit1.hp;
+    }
+    attacking = true;
+    boolean defRange = true;
+    /*for (int i = 0; i < characters[defendingUnit].unit1.attackSquare; i++) {
+      
+    }*/
+    if ((defRange)) {
+      defendcombohit = hit - characters[attackingUnit].unit1.avo;
+      defenddamage = atk - characters[attackingUnit].unit1.def;
+      if (defendcombohit > 100) {
+        defendcombohit = 100;
+      }
+      if (characters[attackingUnit].unit1.hp - defenddamage <= 0) {
+        defenddamage = characters[attackingUnit].unit1.hp;
+      }
     }
     attacking = true;
   }
   
   void attack() {
-    int hit = round(random(100));
-    if (hit <= combohit) {
-      characters[defendingUnit].unit1.hp -= damage;
+    int hit = round(100);
+    if (hit <= attackcombohit) {
+      characters[defendingUnit].unit1.hp -= attackdamage;
+    }
+    hit = round(100);
+    if (hit <= defendcombohit) {
+      characters[attackingUnit].unit1.hp -= defenddamage;
     }
     attacking = false;
     menu.selectedFunction = 0;
     attackSquare = 0;
     select = false;
     menu.item = 1;
-    combohit = 0;
-    damage = 0;
+    attackcombohit = 0;
+    attackdamage = 0;
+    defendcombohit = 0;
+    defenddamage = 0;
   }
   
   void equip() {
