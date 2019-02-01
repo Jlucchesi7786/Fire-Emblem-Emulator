@@ -75,7 +75,7 @@ public class unit {
   // mapX and mapY keep track of where the unit is on the map
   int mapX;
   int mapY;
-  int[] inventory = {0, 1, 7, 17, 15};
+  int[] inventory = {0, round(random(0, weapons.length)), round(random(0, weapons.length)), round(random(0, weapons.length)), round(random(0, weapons.length))};
   int[] attackSquaresX = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   int[] attackSquaresY = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   int[][] attackPlaces = {attackSquaresX, attackSquaresY};
