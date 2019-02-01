@@ -6,6 +6,11 @@
 // Chrom is the test unit
 void setup() {
   size(700, 720);
+  String[] weaponNames = {};
+  /*weaponNames = append(weaponNames, "yes");
+  weaponNames = append(weaponNames, "yes");
+  weaponNames = append(weaponNames, "yes");
+  println(weaponNames);*/
 }
 
 // setting up variables
@@ -37,14 +42,15 @@ void setup() {
   int maxsquare = w * h - 1;
 
 //creating items
-int numItems = 21;
-/*String[] weapons = new String[numItems];
-int[] weaponMts = new int[numItems];
-int[] weaponAvos = new int[numItems];
-int[] weaponHits = new int[numItems];
-int[] weaponCrits = new int[numItems];
-int[] weaponCritavos = new int[numItems];
-int[] weaponRanges = new int[numItems];*/
+public int numItems = 0;
+String[] weapons = {};
+int[] weaponMts = {};
+int[] weaponAvos = {};
+int[] weaponHits = {};
+int[] weaponCrits = {};
+int[] weaponCritavos = {};
+int[] weaponRanges = {};
+
 // creating sword objects
   item bronzeS1 = new item("Sword", "bronze");
   item ironS1 = new item("Sword", "iron");
@@ -74,19 +80,15 @@ int[] weaponRanges = new int[numItems];*/
   item silverB1 = new item("Bow", "silver");
   item crescentB1 = new item("Bow", "crescent");
 
+// creating healing items
+  item vulnerary = new item("Healing", "Vuln");
+
 /*for (int i = 0; i< numItems; i++) {
   weapons[i] = 
 }*/
 // creating arrays
   // 4 character limit on class names
   String[] classes = {"Merc", "Hero", "Bers"};
-  String[] weapons = {"Bronze Sword", "Iron Sword", "Steel Sword", "Silver Sword", "Brave Sword", "Bronze Axe", "Iron Axe", "Steel Axe", "Silver Axe", "Brave Axe", "Bronze Lance", "Iron Lance", "Steel Lance", "Silver Lance", "Brave Lance", "Bronze Bow", "Iron Bow", "Steel Bow", "Silver Bow", "Crescent Bow", "Garbage Sword"};
-  int[] weaponMts = {bronzeS1.mt, ironS1.mt, steelS1.mt, silverS1.mt, braveS1.mt, bronzeA1.mt, ironA1.mt, steelA1.mt, silverA1.mt, braveA1.mt, bronzeL1.mt, ironL1.mt, steelL1.mt, silverL1.mt, braveL1.mt, bronzeB1.mt, ironB1.mt, steelB1.mt, silverB1.mt, crescentB1.mt, garbageS1.mt};
-  int[] weaponAvos = {bronzeS1.avo, ironS1.avo, steelS1.avo, silverS1.avo, braveS1.avo, bronzeA1.avo, ironA1.avo, steelA1.avo, silverA1.avo, braveA1.avo, bronzeL1.avo, ironL1.avo, steelL1.avo, silverL1.avo, braveL1.avo, bronzeB1.avo, ironB1.avo, steelB1.avo, silverB1.avo, crescentB1.avo, garbageS1.avo};
-  int[] weaponHits = {bronzeS1.hit, ironS1.hit, steelS1.hit, silverS1.hit, braveS1.hit, bronzeA1.hit, ironA1.hit, steelA1.hit, silverA1.hit, braveA1.hit, bronzeL1.hit, ironL1.hit, steelL1.hit, silverL1.hit, braveL1.hit, bronzeB1.hit, ironB1.hit, steelB1.hit, silverB1.hit, crescentB1.hit, garbageS1.hit};
-  int[] weaponCrits = {bronzeS1.crit, ironS1.crit, steelS1.crit, silverS1.crit, braveS1.crit, bronzeA1.crit, ironA1.crit, steelA1.crit, silverA1.crit, braveA1.crit, bronzeL1.crit, ironL1.crit, steelL1.crit, silverL1.crit, braveL1.crit, bronzeB1.crit, ironB1.crit, steelB1.crit, silverB1.crit, crescentB1.crit, garbageS1.crit};
-  int[] weaponCritavos = {bronzeS1.critavo, ironS1.critavo, steelS1.critavo, silverS1.critavo, braveS1.critavo, bronzeA1.critavo, ironA1.critavo, steelA1.critavo, silverA1.critavo, braveA1.critavo, bronzeL1.critavo, ironL1.critavo, steelL1.critavo, silverL1.critavo, braveL1.critavo, bronzeB1.critavo, ironB1.critavo, steelB1.critavo, silverB1.critavo, crescentB1.critavo, garbageS1.critavo};
-  int[] weaponRanges = {bronzeS1.range, ironS1.range, steelS1.range, silverS1.range, braveS1.range, bronzeA1.range, ironA1.range, steelA1.range, silverA1.range, braveA1.range, bronzeL1.range, ironL1.range, steelL1.range, silverL1.range, braveL1.range, bronzeB1.range, ironB1.range, steelB1.range, silverB1.range, crescentB1.range, garbageS1.range};
   String[] labels = {"/", "Level ", "exp ", "move ", "Strength  ", "Magic  ", "Skill  ", "Speed  ", "Luck  ", "Defense  ", "Resistance  ", "Atk  ", "Hit  ", "Avo  ", "Crit  "};
   
 // 8 character limit on names
@@ -101,6 +103,10 @@ wall[][] maps = {map1walls, map2walls};
 void draw() {
   background(204);
   map1.display(1);
+    /*println("start");
+  for (int i = 0; i < weaponNames.length; i++) {
+    println(weaponNames[i]);
+  } println("end");*/
   
   for (int i = 0; i < characters.length; i++) {
     characters[i].unit1.display();
